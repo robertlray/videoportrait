@@ -1,0 +1,19 @@
+import os.path
+
+class directory_entry:
+    pathname = ""
+
+    def containing_directory(self):
+        if self.pathname.endswith('/'):
+            (x,y,z) = self.pathname.rstrip('/').rpartition('/')
+            return x
+        else:
+            (x,y,z) = self.pathname.rpartition('/')
+            return x
+
+    def is_file(self):
+        return os.path.isfile(self.pathname)
+
+    def is_directory(self):
+        return os.path.isdir(self.pathname)
+    
