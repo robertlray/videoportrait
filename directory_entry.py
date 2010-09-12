@@ -1,11 +1,10 @@
 import os
 
-
 class directory_entry:
-    pathname = ""
-    children = list()
 
     def __init__(self, pathname = ""):
+        self.pathname = ""
+        self.children = list()
         self.pathname = pathname
         if self.is_directory():
             if self.pathname.endswith('/') == False:
@@ -30,20 +29,22 @@ class directory_entry:
         if self.is_directory() == False:
             return False
         # If this is a directory, continue
-        # Python equivalent of ls
+
+        # List the files in the directory
         dirlist = os.listdir(self.pathname)
+
         # For every item that ls returns, make new directory
         # entry object and stick into children list.
-        for dir in dirlist:
-            z = directory_entry(pathname = self.pathname + dir)
-            z.find_children()
+        for entry in dirlist:
+            z = directory_entry(pathname = self.pathname + entry)    
             self.children.append(z)
+            if z.is_directory() == True:
+                z.find_children()
         return True
 
-    def print_children(self):
+    def print_children(self, recurse=False):
         for child in self.children:
             print child.pathname
-           #  if self.is_file():
-           #      print child.pathname
-           #  elif self.is_directory():
-           #      child.print_children()
+            if child.is_directory() and recurse == True:
+                child.print_children()
+                
