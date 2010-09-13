@@ -59,4 +59,16 @@ class directory_entry:
             elif child.pathname.endswith('.py'):
                 print child.pathname
 
+    def read_file(self):
+        # Find all python files
+        for child in self.children:
+            if child.pathname.endswith('.py'):
+                 # Open the python file
+                y = open(child.pathname)
+                 # print out 1000 bytes of each python file within the terminal
+                for line in y.readlines(1000):
+                    print line
+                 # close file 
+                y.close()
+        
 
