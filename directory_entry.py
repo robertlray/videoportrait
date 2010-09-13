@@ -1,10 +1,6 @@
 import os
 
 class directory_entry:
-<<<<<<< HEAD
-
-=======
->>>>>>> 4e346cb450af4e50a53d32bf67079ca0d0ca4427
 
     def __init__(self, pathname = ""):
         self.pathname = ""
@@ -40,24 +36,27 @@ class directory_entry:
         # For every item that ls returns, make new directory
         # entry object and stick into children list.
         for entry in dirlist:
-<<<<<<< HEAD
             z = directory_entry(pathname = self.pathname + entry)
-=======
             z = directory_entry(pathname = self.pathname + entry)    
->>>>>>> 4e346cb450af4e50a53d32bf67079ca0d0ca4427
             self.children.append(z)
             if z.is_directory() == True:
                 z.find_children()
         return True
 
-    def print_children(self, recurse=False):
+    def print_children(self, recurse = False):
         for child in self.children:
             print child.pathname
-<<<<<<< HEAD
-           
-
-=======
             if child.is_directory() and recurse == True:
                 child.print_children()
-                
->>>>>>> 4e346cb450af4e50a53d32bf67079ca0d0ca4427
+
+    def print_python_children(self):
+        # same as print_children with few changes
+        # just setting two paramaters - needs to either be a directory
+        # or a .py file
+        for child in self.children:
+            if child.is_directory():
+                print child.pathname
+            elif child.pathname.endswith('.py'):
+                print child.pathname
+
+
