@@ -27,48 +27,35 @@ class directory_entry:
     def find_children(self):
         # If this isn't a directory, return FALSE
         if self.is_directory() == False:
-            return False
-        # If this is a directory, continue
-
+            return 'This is not a directory.'
         # List the files in the directory
         dirlist = os.listdir(self.pathname)
-
         # For every item that ls returns, make new directory
         # entry object and stick into children list.
         for entry in dirlist:
-            z = directory_entry(pathname = self.pathname + entry)
-            z = directory_entry(pathname = self.pathname + entry)    
+            z = directory_entry(pathname = self.pathname + entry)  
             self.children.append(z)
             if z.is_directory() == True:
                 z.find_children()
         return True
 
-    def print_children(self, recurse = False):
+    def print_children(self, recurse = False, filetype = False, headers = False):
         for child in self.children:
-            print child.pathname
-            if child.is_directory() and recurse == True:
-                child.print_children()
-
-    def print_python_children(self):
-        # same as print_children with few changes
-        # just setting two paramaters - needs to either be a directory
-        # or a .py file
-        for child in self.children:
-            if child.is_directory():
+            if child.pathname.endswith('.py') and filetype == 'python':
                 print child.pathname
-            elif child.pathname.endswith('.py'):
-                print child.pathname
-
-    def read_file(self):
-        # Find all python files
-        for child in self.children:
-            if child.pathname.endswith('.py'):
-                 # Open the python file
+            elif filetype == 'python' and not child.pathname.endswith('.py'):
+                return None
+            if child.is_file() and headers == True:
                 y = open(child.pathname)
-                 # print out 1000 bytes of each python file within the terminal
-                for line in y.readlines(1000):
-                    print line
-                 # close file 
+                print y.readline()
                 y.close()
+            else:
+                print child.pathname
+                if child.is_directory() and recurse == True:
+                    child.print_children()
+            
+            
+       
+
         
 
